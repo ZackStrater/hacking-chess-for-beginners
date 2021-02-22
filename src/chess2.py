@@ -7,8 +7,13 @@ chunksize = 10**9
 with open('/home/zackstrater/Downloads/lichess_data_june_2018', 'r') as f:
     while True:
         read_data = f.read(chunksize)
-        games = re.findall(   # make capturing groups better so you don't have to edit later
-            r'''(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,22}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+?\d-\d\n)''', read_data)
+        games = re.findall(
+            #               noncaptured lines             noncaptured lines   Only games where Elo between 1000-15000                                                                                                            only 5 minute games                              only games past 10 moves
+            r'''(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)''', read_data)
+        # some games come with evaluations and moves are notated differently.  These games are excluded
+        games = [game for game in games if 'eval' not in game[9]]
+
+        # bins for each capture group
         game_id = []
         result = []
         white_elo = []
@@ -18,7 +23,7 @@ with open('/home/zackstrater/Downloads/lichess_data_june_2018', 'r') as f:
         eco = []
         opening = []
         time_control = []
-        moves = []
+        first_ten_moves = []
         for game in games:
             game_id.append(game[0][7:-3])
             result.append(game[1][9]) # 1 = White win, 0 = Black win
@@ -29,18 +34,26 @@ with open('/home/zackstrater/Downloads/lichess_data_june_2018', 'r') as f:
             eco.append(game[6][6:9])
             opening.append(game[7][10:-3])
             time_control.append(game[8][14:19])
-            moves.append(game[9][1:-5])
+
+            game_moves = game[9][1:-5]
+            individual_move_pairs = re.findall(r'\d\. (.+?) {.+?} (.+?) {', game_moves)
+            first_ten_moves_from_pairs = []
+
+            for i in range(5):
+                first_ten_moves_from_pairs.append(individual_move_pairs[i][0])
+                first_ten_moves_from_pairs.append(individual_move_pairs[i][1])
+            first_ten_moves.append(first_ten_moves_from_pairs)
 
         df = pd.DataFrame({'game_id': game_id, 'result': result, "white_elo": white_elo,
                            'black_elo': black_elo, 'white_rating_diff': white_rating_diff,
                            'black_rating_diff': black_rating_diff, 'eco': eco, 'opening': opening,
-                           'time_control': time_control, 'moves': moves
+                           'time_control': time_control, 'first_ten_moves': first_ten_moves
                            })
-        # pd.set_option('display.max_columns', None)  # or 1000
-        # pd.set_option('display.max_rows', None)  # or 1000
-        # pd.set_option('display.width', None)
-        # pd.set_option('display.max_colwidth', None)  # or 199
-        # print(df)
+        pd.set_option('display.max_columns', None)  # or 1000
+        pd.set_option('display.max_rows', None)  # or 1000
+        pd.set_option('display.width', None)
+        pd.set_option('display.max_colwidth', None)  # or 199
+        print(df)
 
         df.to_csv('/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned', index=False, header=False, mode='a')
         print(len(games))
@@ -50,7 +63,7 @@ with open('/home/zackstrater/Downloads/lichess_data_june_2018', 'r') as f:
 
 print(total)
 
-
+# seeing the most popular time formats (kinda)
 # from collections import Counter
 # time_dict ={}
 # for k, v in Counter(time_control).items():
