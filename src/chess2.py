@@ -3,7 +3,7 @@ import pandas as pd
 import time
 
 
-def clean_pgns(pgn_games, path, evaluation=False):
+def clean_pgns(pgn_games, path_out, evaluation=False):
     # bins for each capture group
     game_id = []
     result = []
@@ -27,7 +27,6 @@ def clean_pgns(pgn_games, path, evaluation=False):
         opening.append(game[7][10:-3])
         time_control.append(game[8][14:19])
         game_moves = game[9][1:-5]
-
         if not evaluation:
             individual_move_pairs = re.findall(r'\d\d?\. (.+?) {.+?} (.+?) {', game_moves)
             current_game_first_ten_moves = []
@@ -36,7 +35,7 @@ def clean_pgns(pgn_games, path, evaluation=False):
                 current_game_first_ten_moves.append(individual_move_pairs[i][1])
             first_ten_moves.append(current_game_first_ten_moves)
         else:
-            individual_moves_and_eval = re.findall(r'\d{1,2}\. ([\w-]+).+?{ \[%eval (-?\d\.\d{1,2}).+?} \d{1,2}\.\.\. ([\w\-]+).+?{ \[%eval (-?\d\.\d{1,2})', game_moves)
+            individual_moves_and_eval = re.findall(r'\d{1,2}\. ([\w-]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}).+?} \d{1,2}\.\.\. ([\w\-]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2})', game_moves)
             current_game_first_ten_moves = []
             eval_current_game_first_ten_moves = []
             for i in range(5):
@@ -60,45 +59,42 @@ def clean_pgns(pgn_games, path, evaluation=False):
     pd.set_option('display.max_rows', None)  # or 1000
     pd.set_option('display.width', None)
     pd.set_option('display.max_colwidth', None)  # or 199
-    print(df)
 
-    df.to_csv(path, index=False, header=False, mode='a')
+    df.to_csv(path_out, index=False, header=False, mode='a')
     print(len(pgn_games))
 
 
-chunksize = 10**8
-with open('/home/zackstrater/Downloads/lichess_data_june_2018', 'r') as f:
-    while True:
-        read_data = f.read(chunksize)
-        games = re.findall(
-            #               noncaptured lines             noncaptured lines   Only games where Elo between 1000-15000                                                                                                            only 5 minute games                              only games past 10 moves
-            r'''(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)''', read_data)
-        non_eval_games = []
-        eval_games =[]
-        for game in games:
-            if 'eval' in game[9]:
-                eval_games.append(game)
-            else:
-                non_eval_games.append(game)
-        #clean_pgns(eval_games, '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned', evaluation=True)
-        clean_pgns(non_eval_games, '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned')
-        if not read_data:
-            break
+def load_split_data(regex_string, path_in, path_out_eval_games, path_out_non_eval_games, chunksize=10**9, eval_field=9):
+    with open(path_in, 'r') as f:
+        while True:
+            read_data = f.read(chunksize)
+            games = re.findall(r'{}'.format(regex_string), read_data)
+            non_eval_games = []
+            eval_games = []
+            for game in games:
+                if 'eval' in game[eval_field]:
+                    eval_games.append(game)
+                else:
+                    non_eval_games.append(game)
+            clean_pgns(eval_games, path_out_eval_games, evaluation=True)
+            clean_pgns(non_eval_games, path_out_non_eval_games)
+            if not read_data:
+                break
+
+
+regex_string_1000_1500_games_fixed = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+
+path_in_june_2018 = '/home/zackstrater/Downloads/lichess_data_june_2018'
+path_out_june_2018_eval = '/media/zackstrater/New Volume/test_chess_data/eval_games'
+path_out_june_2018_non_eval = '/media/zackstrater/New Volume/test_chess_data/non_eval_games'
+load_split_data(regex_string_1000_1500_games_fixed, path_in_june_2018, path_out_june_2018_eval, path_out_june_2018_non_eval)
 
 
 
 
 
-# seeing the most popular time formats (kinda)
-# from collections import Counter
-# time_dict ={}
-# for k, v in Counter(time_control).items():
-#     if v / 140000 * 100 > 9:
-#         if k not in time_dict:
-#             time_dict[k] = v / 140000 * 100
-#         else:
-#             time_dict[k] = (time_dict[k] + v / 140000 * 100) / 2
-# print(time_dict)
+
+
 
 
 # all games (for finding out percentage of players in each elo and diff time controls)

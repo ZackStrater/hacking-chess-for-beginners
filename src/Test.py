@@ -1,17 +1,11 @@
-import multiprocessing
-import pandas as pd
-import numpy as np
-from multiprocessing import Pool
-num_partitions = 5
-num_cores = multiprocessing.cpu_count()
-cores = cpu_count()  # Number of CPU cores on your system
-partitions = cores  # Define as many partitions as you want
+
+import re
+r = '1. e4 { [%eval 0.03] [%clk 0:05:00] } 1... e5 { [%eval 0.37] [%clk 0:05:00] } 2. d4?! { [%eval -0.39] [%clk 0:04:57] } 2... exd4 { [%eval -0.11] [%clk 0:04:56] } 3. Qxd4 { [%eval -0.15] [%clk 0:04:56] } 3... Nc6 { [%eval 0.0] [%clk 0:04:56] } 4. Bc4?? { [%eval -11.5] [%clk 0:04:55] } 4... Nxd4 { [%eval -11.8] [%clk 0:04:53] } 5. c3 { [%eval -16.3] [%clk 0:04:51] } 5... Nc6 { [%eval -11.45] [%clk 0:04:49] } 6. Nf3 { [%eval -11.41] [%clk 0:04:48] } 6... Bc5 { [%eval -11.45] [%clk 0:04:44] } 7. O-O { [%eval -11.4] [%clk 0:04:47] } 7... d6 { [%eval -11.39] [%clk 0:04:39] } 8. b4 { [%eval -11.55] [%clk 0:04:45] } 8... Bb6 { [%eval -11.5] [%clk 0:04:36] } 9. Ng5 { [%eval -12.62] [%clk 0:04:40] } 9... Nh6 { [%eval -11.76] [%clk 0:04:34] } 10. Na3 { [%eval -12.47] [%clk 0:04:33] } 10... a5 { [%eval -12.46] [%clk 0:04:00] } 11. b5 { [%eval -13.44] [%clk 0:04:27] } 11... Ne5 { [%eval -12.78] [%clk 0:03:57] } 12. Bd5 { [%eval -13.61] [%clk 0:04:22] } 12... Qd7 { [%eval -12.3] [%clk 0:03:49] } 13. Re1 { [%eval -13.52] [%clk 0:04:15] } 13... Neg4 { [%eval -12.37] [%clk 0:03:31] } 14. Kh1 { [%eval -17.32] [%clk 0:03:57] } 14... Nxf2+ { [%eval -17.08] [%clk 0:03:25] } 15. Kg1 { [%eval -17.11] [%clk 0:03:55] } 15... Nd3+ { [%eval -15.31] [%clk 0:03:08] } 16. Kf1 { [%eval -19.64] [%clk 0:03:53] } 16... Nxe1 { [%eval -19.45] [%clk 0:03:04] } 17. Kxe1 { [%eval -19.37] [%clk 0:03:52] } 17... Qg4 { [%eval -18.77] [%clk 0:03:01] } 18. g3 { [%eval -19.56] [%clk 0:03:44] } 18... f6 { [%eval -19.15] [%clk 0:02:57] } 19. e5 { [%eval -24.35] [%clk 0:02:50] } 19... fxg5 { [%eval -23.77] [%clk 0:02:50] } 20. exd6 { [%eval -29.02] [%clk 0:02:49] } 20... cxd6 { [%eval -20.16] [%clk 0:02:42] } 21. Bd2 { [%eval -28.8] [%clk 0:02:40] } 21... Qf5 { [%eval -27.04] [%clk 0:02:31] } 22. Kd1 { [%eval -37.78] [%clk 0:02:37] } 22... Qf1+ { [%eval -34.1] [%clk 0:02:24] } 23. Kc2 { [%eval -34.77] [%clk 0:02:34] } 23... Bf5+ { [%eval -25.4] [%clk 0:02:20] } 24. Kb2 { [%eval -25.07] [%clk 0:02:29] } 24... Qd3 { [%eval -24.37] [%clk 0:02:03] } 25. Nc4?! { [%eval #-2] [%clk 0:02:24] } 25... Qc2+ { [%eval #-1] [%clk 0:01:55] } 26. Ka3 { [%eval #-1] [%clk 0:02:19] } 26... Bc5# { [%clk 0:01:54] }'
 
 
-def parallelize(data, func):
-    data_split = np.array_split(data, partitions)
-    pool = Pool(cores)
-    data = pd.concat(pool.map(func, data_split))
-    pool.close()
-    pool.join()
-    return data
+individual_moves_and_eval = re.findall(r'\d{1,2}\. [\w-]+.+?{ \[%eval -?\d\.\d{1,2}.+?} \d{1,2}\.\.\. [\w\-]+.+?{ \[%eval -?\d\.\d{1,2}', r)
+
+print(individual_moves_and_eval)
+
+
+
