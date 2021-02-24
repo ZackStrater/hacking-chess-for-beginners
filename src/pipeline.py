@@ -130,11 +130,11 @@ regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?
 # load_split_data(regex_string_1000_1500_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
 
 
-regex_string_2000_plus_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "2\d\d\d"]\n)(\[BlackElo "2\d\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
-path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
-path_out_jan_2021_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_eval_games_cleaned'
-path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_cleaned'
-load_split_data(regex_string_2000_plus_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
+# regex_string_2000_plus_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "2\d\d\d"]\n)(\[BlackElo "2\d\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+# path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
+# path_out_jan_2021_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_eval_games_cleaned'
+# path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_cleaned'
+# load_split_data(regex_string_2000_plus_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
 
 # all games (for finding out percentage of players in each elo and diff time controls)
 # games = re.findall(
