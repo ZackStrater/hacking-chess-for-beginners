@@ -8,6 +8,7 @@ engine = chess.engine.SimpleEngine.popen_uci("/home/zackstrater/stockfish_13_lin
 def stockfish_evaluation(board, engine, depth = 20):
     result = engine.analyse(board, chess.engine.Limit(depth=depth))
     return result['score']
-
+for k,v in board.piece_map().items():
+    print(k,v)
 
 engine.quit()

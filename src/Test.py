@@ -1,11 +1,156 @@
 
 import re
-r = '1. e4 { [%eval 0.03] [%clk 0:05:00] } 1... e5 { [%eval 0.37] [%clk 0:05:00] } 2. d4?! { [%eval -0.39] [%clk 0:04:57] } 2... exd4 { [%eval -0.11] [%clk 0:04:56] } 3. Qxd4 { [%eval -0.15] [%clk 0:04:56] } 3... Nc6 { [%eval 0.0] [%clk 0:04:56] } 4. Bc4?? { [%eval -11.5] [%clk 0:04:55] } 4... Nxd4 { [%eval -11.8] [%clk 0:04:53] } 5. c3 { [%eval -16.3] [%clk 0:04:51] } 5... Nc6 { [%eval -11.45] [%clk 0:04:49] } 6. Nf3 { [%eval -11.41] [%clk 0:04:48] } 6... Bc5 { [%eval -11.45] [%clk 0:04:44] } 7. O-O { [%eval -11.4] [%clk 0:04:47] } 7... d6 { [%eval -11.39] [%clk 0:04:39] } 8. b4 { [%eval -11.55] [%clk 0:04:45] } 8... Bb6 { [%eval -11.5] [%clk 0:04:36] } 9. Ng5 { [%eval -12.62] [%clk 0:04:40] } 9... Nh6 { [%eval -11.76] [%clk 0:04:34] } 10. Na3 { [%eval -12.47] [%clk 0:04:33] } 10... a5 { [%eval -12.46] [%clk 0:04:00] } 11. b5 { [%eval -13.44] [%clk 0:04:27] } 11... Ne5 { [%eval -12.78] [%clk 0:03:57] } 12. Bd5 { [%eval -13.61] [%clk 0:04:22] } 12... Qd7 { [%eval -12.3] [%clk 0:03:49] } 13. Re1 { [%eval -13.52] [%clk 0:04:15] } 13... Neg4 { [%eval -12.37] [%clk 0:03:31] } 14. Kh1 { [%eval -17.32] [%clk 0:03:57] } 14... Nxf2+ { [%eval -17.08] [%clk 0:03:25] } 15. Kg1 { [%eval -17.11] [%clk 0:03:55] } 15... Nd3+ { [%eval -15.31] [%clk 0:03:08] } 16. Kf1 { [%eval -19.64] [%clk 0:03:53] } 16... Nxe1 { [%eval -19.45] [%clk 0:03:04] } 17. Kxe1 { [%eval -19.37] [%clk 0:03:52] } 17... Qg4 { [%eval -18.77] [%clk 0:03:01] } 18. g3 { [%eval -19.56] [%clk 0:03:44] } 18... f6 { [%eval -19.15] [%clk 0:02:57] } 19. e5 { [%eval -24.35] [%clk 0:02:50] } 19... fxg5 { [%eval -23.77] [%clk 0:02:50] } 20. exd6 { [%eval -29.02] [%clk 0:02:49] } 20... cxd6 { [%eval -20.16] [%clk 0:02:42] } 21. Bd2 { [%eval -28.8] [%clk 0:02:40] } 21... Qf5 { [%eval -27.04] [%clk 0:02:31] } 22. Kd1 { [%eval -37.78] [%clk 0:02:37] } 22... Qf1+ { [%eval -34.1] [%clk 0:02:24] } 23. Kc2 { [%eval -34.77] [%clk 0:02:34] } 23... Bf5+ { [%eval -25.4] [%clk 0:02:20] } 24. Kb2 { [%eval -25.07] [%clk 0:02:29] } 24... Qd3 { [%eval -24.37] [%clk 0:02:03] } 25. Nc4?! { [%eval #-2] [%clk 0:02:24] } 25... Qc2+ { [%eval #-1] [%clk 0:01:55] } 26. Ka3 { [%eval #-1] [%clk 0:02:19] } 26... Bc5# { [%clk 0:01:54] }'
+import pandas as pd
+import time
 
 
-individual_moves_and_eval = re.findall(r'\d{1,2}\. [\w-]+.+?{ \[%eval -?\d\.\d{1,2}.+?} \d{1,2}\.\.\. [\w\-]+.+?{ \[%eval -?\d\.\d{1,2}', r)
+def clean_pgns(pgn_games, path_out, evaluation=False):
+    # bins for each capture group
+    game_id = []
+    result = []
+    white_elo = []
+    black_elo = []
+    white_rating_diff = []
+    black_rating_diff = []
+    eco = []
+    opening = []
+    time_control = []
+    first_five_moves = [[] for _ in range(10)]
+    eval_first_five_moves = [[] for _ in range(10)]
+    for game in pgn_games:
+        game_id.append(game[0][7:-3])
+        result.append(game[1][9])  # 1 = White win, 0 = Black win
+        white_elo.append(game[2][11:15])
+        black_elo.append(game[3][11:15])
+        white_rating_diff.append(game[4])
+        black_rating_diff.append(game[5])
+        eco.append(game[6][6:9])
+        opening.append(game[7][10:-3])
+        time_control.append(game[8][14:19])
+        game_moves = game[9][1:-5]
 
-print(individual_moves_and_eval)
+        if not evaluation:
+            individual_move_pairs = re.findall(r'\d\d?\. (.+?) {.+?} \d{1,2}\.\.\. (.+?) {', game_moves)
+            current_game_first_five_moves = []
+            for i in range(5):
+                current_game_first_five_moves.append(individual_move_pairs[i][0])
+                current_game_first_five_moves.append(individual_move_pairs[i][1])
+            for i in range(10):
+                first_five_moves[i].append(current_game_first_five_moves[i])
+
+        else:
+            individual_moves_and_eval = re.findall(r'\d{1,2}\. ([\w\-+=#]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}|#\d{1,2}).+?} \d{1,2}\.\.\. ([\w\-+=#]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}|#\d{1,2})', game_moves)
+            current_game_first_five_moves = []
+            eval_current_game_first_five_moves = []
+            for i in range(5):
+                current_game_first_five_moves.append(individual_moves_and_eval[i][0])
+                current_game_first_five_moves.append(individual_moves_and_eval[i][2])
+                eval_current_game_first_five_moves.append(individual_moves_and_eval[i][1])
+                eval_current_game_first_five_moves.append(individual_moves_and_eval[i][3])
+            for i in range(10):
+                first_five_moves[i].append(current_game_first_five_moves[i])
+                eval_first_five_moves[i].append(eval_current_game_first_five_moves[i])
+
+    if not evaluation:
+        df = pd.DataFrame({'game_id': game_id, 'result': result, "white_elo": white_elo,
+                           'black_elo': black_elo, 'white_rating_diff': white_rating_diff,
+                           'black_rating_diff': black_rating_diff, 'eco': eco, 'opening': opening,
+                           'time_control': time_control,
+                           '1w': first_five_moves[0],
+                           '1b': first_five_moves[1],
+                           '2w': first_five_moves[2],
+                           '2b': first_five_moves[3],
+                           '3w': first_five_moves[4],
+                           '3b': first_five_moves[5],
+                           '4w': first_five_moves[6],
+                           '4b': first_five_moves[7],
+                           '5w': first_five_moves[8],
+                           '5b': first_five_moves[9]
+                           })
+    else:
+        df = pd.DataFrame({'game_id': game_id, 'result': result, "white_elo": white_elo,
+                           'black_elo': black_elo, 'white_rating_diff': white_rating_diff,
+                           'black_rating_diff': black_rating_diff, 'eco': eco, 'opening': opening,
+                           'time_control': time_control,
+                           '1w': first_five_moves[0],
+                           '1b': first_five_moves[1],
+                           '2w': first_five_moves[2],
+                           '2b': first_five_moves[3],
+                           '3w': first_five_moves[4],
+                           '3b': first_five_moves[5],
+                           '4w': first_five_moves[6],
+                           '4b': first_five_moves[7],
+                           '5w': first_five_moves[8],
+                           '5b': first_five_moves[9],
+                            'eval_1w': eval_first_five_moves[0],
+                            'eval_1b': eval_first_five_moves[1],
+                            'eval_2w': eval_first_five_moves[2],
+                            'eval_2b': eval_first_five_moves[3],
+                            'eval_3w': eval_first_five_moves[4],
+                            'eval_3b': eval_first_five_moves[5],
+                            'eval_4w': eval_first_five_moves[6],
+                            'eval_4b': eval_first_five_moves[7],
+                            'eval_5w': eval_first_five_moves[8],
+                            'eval_5b': eval_first_five_moves[9]
+                            })
+
+    df.to_csv(path_out, index=False, header=False, mode='a')
+    print(len(pgn_games))
+
+
+def load_split_data(regex_string, path_in, path_out_eval_games, path_out_non_eval_games, chunksize=10**6, eval_field=9):
+    with open(path_in, 'r') as f:
+        while True:
+            read_data = f.read(chunksize)
+            games = re.findall(r'{}'.format(regex_string), read_data)
+            print(read_data)
+            non_eval_games = []
+            eval_games = []
+            for game in games:
+                if 'eval' in game[eval_field]:
+                    eval_games.append(game)
+                else:
+                    non_eval_games.append(game)
+            clean_pgns(eval_games, path_out_eval_games, evaluation=True)
+            clean_pgns(non_eval_games, path_out_non_eval_games)
+            if not read_data:
+                break
+
+
+regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+
+
+# path_in_june_2018 = '/home/zackstrater/Downloads/lichess_data_june_2018'
+# path_out_june_2018_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_eval_games_cleaned'
+# path_out_june_2018_non_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned'
+# load_split_data(regex_string_1000_1500_games, path_in_june_2018, path_out_june_2018_eval, path_out_june_2018_non_eval)
+
+
+# path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
+# path_out_jan_2021_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_jan_2021_eval_games_cleaned'
+# path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_jan_2021_cleaned'
+# load_split_data(regex_string_1000_1500_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
+
+
+
+regex_string_all_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo.+?\n)(\[BlackElo.+?\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl.+?"]\n)(?:\[Termination.+?\n)(\n.+?\d-\d\n)'
+
+
+#get distribution of elos
+#
+
+path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
+path_out_jan_2021_eval = '/media/zackstrater/New Volume/chess_data/ALL_lichess_data_jan_2021_eval_games_cleaned'
+path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/ALL_lichess_data_jan_2021_cleaned'
+load_split_data(regex_string_all_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
+
+
+
+# all games (for finding out percentage of players in each elo and diff time controls)
+# games = re.findall(
+#             r'''(\[Result.+?\n)(?:.+?\n){2}(\[WhiteElo.+?\n)(\[BlackElo.+?\n)(\[WhiteRatingDiff.+?\n)(\[BlackRatingDiff.+?\n)(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl.+?\n)(\[Termination.+?\n)(\n1\..+?\d-\d\n)''', read_data)
+#         print(len(games))
+
 
 
 

@@ -29,7 +29,7 @@ def clean_pgns(pgn_games, path_out, evaluation=False):
         game_moves = game[9][1:-5]
 
         if not evaluation:
-            individual_move_pairs = re.findall(r'\d\d?\. (.+?) {.+?} (.+?) {', game_moves)
+            individual_move_pairs = re.findall(r'\d\d?\. (.+?) {.+?} \d{1,2}\.\.\. (.+?) {', game_moves)
             current_game_first_five_moves = []
             for i in range(5):
                 current_game_first_five_moves.append(individual_move_pairs[i][0])
@@ -38,7 +38,7 @@ def clean_pgns(pgn_games, path_out, evaluation=False):
                 first_five_moves[i].append(current_game_first_five_moves[i])
 
         else:
-            individual_moves_and_eval = re.findall(r'\d{1,2}\. ([\w-]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}).+?} \d{1,2}\.\.\. ([\w\-]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2})', game_moves)
+            individual_moves_and_eval = re.findall(r'\d{1,2}\. ([\w\-+=#]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}|#\d{1,2}).+?} \d{1,2}\.\.\. ([\w\-+=#]+).+?{ \[%eval (-?\d{1,2}\.\d{1,2}|#\d{1,2})', game_moves)
             current_game_first_five_moves = []
             eval_current_game_first_five_moves = []
             for i in range(5):
@@ -102,7 +102,6 @@ def load_split_data(regex_string, path_in, path_out_eval_games, path_out_non_eva
         while True:
             read_data = f.read(chunksize)
             games = re.findall(r'{}'.format(regex_string), read_data)
-            print(games)
             non_eval_games = []
             eval_games = []
             for game in games:
@@ -118,10 +117,11 @@ def load_split_data(regex_string, path_in, path_out_eval_games, path_out_non_eva
 
 regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
 
-path_in_june_2018 = '/home/zackstrater/Downloads/lichess_data_june_2018'
-path_out_june_2018_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_eval_games_cleaned'
-path_out_june_2018_non_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned'
-load_split_data(regex_string_1000_1500_games, path_in_june_2018, path_out_june_2018_eval, path_out_june_2018_non_eval)
+
+# path_in_june_2018 = '/home/zackstrater/Downloads/lichess_data_june_2018'
+# path_out_june_2018_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_eval_games_cleaned'
+# path_out_june_2018_non_eval = '/media/zackstrater/New Volume/chess_data/lichess_data_june_2018_cleaned'
+# load_split_data(regex_string_1000_1500_games, path_in_june_2018, path_out_june_2018_eval, path_out_june_2018_non_eval)
 
 
 # path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
@@ -130,9 +130,11 @@ load_split_data(regex_string_1000_1500_games, path_in_june_2018, path_out_june_2
 # load_split_data(regex_string_1000_1500_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
 
 
-
-
-
+regex_string_2000_plus_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?\n){0,2}(\[WhiteElo "2\d\d\d"]\n)(\[BlackElo "2\d\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
+path_out_jan_2021_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_eval_games_cleaned'
+path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_cleaned'
+load_split_data(regex_string_2000_plus_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
 
 # all games (for finding out percentage of players in each elo and diff time controls)
 # games = re.findall(
