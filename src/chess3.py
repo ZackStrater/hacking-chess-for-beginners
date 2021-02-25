@@ -58,7 +58,7 @@ def isolate_move(current_board_state_array, previous_board_state_array, move_col
         return None
 
 
-def compile_moves(moves):
+def compile_moves(moves, move_cutoff=0):
     board = chess.Board()
     raw_move_array_bin = [convert_board_to_array(board)] # initialized with starting board position
     for i in range(len(moves)):
@@ -72,7 +72,7 @@ def compile_moves(moves):
             isolated_move_array_bin.append(isolate_move(raw_move_array_bin[i], raw_move_array_bin[i-1], 'w'))
         else:
             isolated_move_array_bin.append(isolate_move(raw_move_array_bin[i], raw_move_array_bin[i - 1], 'b'))
-    combined_moves_dict = {
+    compiled_moves_dict = {
         'white_rook': np.zeros((8,8)),
         'white_knight': np.zeros((8, 8)),
         'white_bishop': np.zeros((8, 8)),
@@ -97,47 +97,55 @@ def compile_moves(moves):
     }
 
 
-    for array in raw_move_array_bin:
-        print(array)
-        print('\n')
-    print('\n\n')
-    for array in isolated_move_array_bin:
+    for array in isolated_move_array_bin[move_cutoff:]:
         piece_moved_num = array[np.nonzero(array)]
         if len(piece_moved_num) > 1: #castling moves two pieces
             for num in piece_moved_num:
-                array[array != num] = 0
+                num_array = np.copy(array)
+                num_array[num_array != num] = 0
                 piece_moved = convert_number_to_piece_name[num]
-                combined_moves_dict[piece_moved] += array
+                compiled_moves_dict[piece_moved] += num_array/num
 
-        else: # normal move
+        # normal move
+        else:
             piece_moved = convert_number_to_piece_name[piece_moved_num[0]]
-            combined_moves_dict[piece_moved] += array  # need to divide arrays by their number at end of combination
+            compiled_moves_dict[piece_moved] += array/piece_moved_num[0]  # need to divide arrays by their number at end of combination
 
+    return compiled_moves_dict
 
+import pandas as pd
 
-compile_moves(['d4', 'd5', 'c4', 'Nf6', 'cxd5', 'e5', 'dxe6', 'Be7', 'e3', 'O-O'])
-# taking moves is complicated
+columns = ['game_id', 'result', "white_elo", 'black_elo', 'white_rating_diff',
+           'black_rating_diff', 'eco', 'opening', 'time_control', 'all_game_moves']
+df = pd.read_csv('/media/zackstrater/New Volume/chess_data/white_wins_full_game_lichess_data_jan_2021_cleaned',
+                 names=columns)
 
+df2 = df[df['opening'] == 'Ruy Lopez']
+total_heat_map = {
+        'white_rook': np.zeros((8,8)),
+        'white_knight': np.zeros((8, 8)),
+        'white_bishop': np.zeros((8, 8)),
+        'white_king': np.zeros((8, 8)),
+        'white_queen': np.zeros((8, 8)),
+        'white_pawn': np.zeros((8, 8)),
 
+        'black_rook': np.zeros((8,8)),
+        'black_knight': np.zeros((8, 8)),
+        'black_bishop': np.zeros((8, 8)),
+        'black_king': np.zeros((8, 8)),
+        'black_queen': np.zeros((8, 8)),
+        'black_pawn': np.zeros((8, 8))
+    }
+for game in df2['all_game_moves']:
+    moves = game.split(' ')
+    game_heat_map_dict = compile_moves(moves[:-1], move_cutoff=5)
+    for k,v in game_heat_map_dict.items():
+        total_heat_map[k] += v
 
-# move_0 = convert_board_to_array(board)
-#
-# board.push_san('e4')
-#
-# move_1 = convert_board_to_array(board)
-# white_1 = move_1-move_0
-# white_1[white_1<0] = 0
-# print(white_1)
-#
-# board.push_san('e5')
-#
-# move_2 = convert_board_to_array(board)
-# print(move_2-move_1)
-# black_1[black_1>0] = 0
-# print(white_1)
-#
-# board.push_san('d4')
-#
-# move_3 = convert_board_to_array(board)
-# print(move_3-move_2)
+import seaborn as sns; sns.set_theme()
+import matplotlib.pyplot as plt
+data = total_heat_map['black_king']
+
+ax = sns.heatmap(data)
+plt.show()
 
