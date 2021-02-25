@@ -136,9 +136,9 @@ regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result.+?\n)(?:.+?
 # path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/over_2000_lichess_data_jan_2021_cleaned'
 # load_split_data(regex_string_2000_plus_games, path_in_jan_2021, path_out_jan_2021_eval, path_out_jan_2021_non_eval)
 
-player_elos = '\[White "(.+?)"]\n\[Black "(.+?)"]\n(?:.+?\n){0,3}\[WhiteElo "(\d{3,4})"]\n\[BlackElo "(\d{3,4})"]\n'
+player_elos = '\[White "(.+?)"]\n\[Black "(.+?)"]\n(?:.+?\n){0,3}\[WhiteElo "(\d{3,4})"]\n\[BlackElo "(\d{3,4})"]\n(?:.+?\n){0,4}\[TimeControl "(300\+0)"]\n'
 path_in_elos = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
-path_out_elos = '/media/zackstrater/New Volume/chess_data/player_elos'
+path_out_elos = '/media/zackstrater/New Volume/chess_data/player_elos_300+0_games'
 with open(path_in_elos, 'r') as f:
     chunksize=10**9
     while True:
@@ -148,17 +148,19 @@ with open(path_in_elos, 'r') as f:
         black_name = []
         white_elo = []
         black_elo = []
+        time_control = []
 
         for game in games:
             white_name.append(game[0])
             black_name.append(game[1])
             white_elo.append(game[2])
             black_elo.append(game[3])
-
+            time_control.append(game[4])
         df = pd.DataFrame({'white_name': white_name,
                            'black_name': black_name,
                            'white_elo': white_elo,
-                           'black_elo': black_elo
+                           'black_elo': black_elo,
+                           'time_control': time_control
                            })
         print(len(games))
         df.to_csv(path_out_elos, index=False, header=False, mode='a')
