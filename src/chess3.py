@@ -58,7 +58,7 @@ def isolate_move(current_board_state_array, previous_board_state_array, move_col
         return None
 
 
-def compile_moves(moves, move_cutoff=0):
+def compile_moves(moves, first_move_cutoff=0, last_move_cutoff=None):
     board = chess.Board()
     raw_move_array_bin = [convert_board_to_array(board)] # initialized with starting board position
     for i in range(len(moves)):
@@ -97,7 +97,7 @@ def compile_moves(moves, move_cutoff=0):
     }
 
 
-    for array in isolated_move_array_bin[move_cutoff:]:
+    for array in isolated_move_array_bin[first_move_cutoff:last_move_cutoff]:
         piece_moved_num = array[np.nonzero(array)]
         if len(piece_moved_num) > 1: #castling moves two pieces
             for num in piece_moved_num:
@@ -121,31 +121,43 @@ df = pd.read_csv('/media/zackstrater/New Volume/chess_data/white_wins_full_game_
                  names=columns)
 
 df2 = df[df['opening'] == 'Ruy Lopez']
-total_heat_map = {
-        'white_rook': np.zeros((8,8)),
-        'white_knight': np.zeros((8, 8)),
-        'white_bishop': np.zeros((8, 8)),
-        'white_king': np.zeros((8, 8)),
-        'white_queen': np.zeros((8, 8)),
-        'white_pawn': np.zeros((8, 8)),
 
-        'black_rook': np.zeros((8,8)),
-        'black_knight': np.zeros((8, 8)),
-        'black_bishop': np.zeros((8, 8)),
-        'black_king': np.zeros((8, 8)),
-        'black_queen': np.zeros((8, 8)),
-        'black_pawn': np.zeros((8, 8))
-    }
-for game in df2['all_game_moves']:
-    moves = game.split(' ')
-    game_heat_map_dict = compile_moves(moves[:-1], move_cutoff=5)
-    for k,v in game_heat_map_dict.items():
-        total_heat_map[k] += v
+def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_cutoff=None):
+    total_heat_map = {
+            'white_rook': np.zeros((8,8)),
+            'white_knight': np.zeros((8, 8)),
+            'white_bishop': np.zeros((8, 8)),
+            'white_king': np.zeros((8, 8)),
+            'white_queen': np.zeros((8, 8)),
+            'white_pawn': np.zeros((8, 8)),
 
-import seaborn as sns; sns.set_theme()
-import matplotlib.pyplot as plt
-data = total_heat_map['black_king']
+            'black_rook': np.zeros((8,8)),
+            'black_knight': np.zeros((8, 8)),
+            'black_bishop': np.zeros((8, 8)),
+            'black_king': np.zeros((8, 8)),
+            'black_queen': np.zeros((8, 8)),
+            'black_pawn': np.zeros((8, 8))
+        }
 
-ax = sns.heatmap(data)
-plt.show()
 
+    for game in dataframe_pgns:
+        moves = game.split(' ')
+        game_heat_map_dict = compile_moves(moves[:-1], first_move_cutoff=first_move_cutoff, last_move_cutoff=last_move_cutoff)
+        for k,v in game_heat_map_dict.items():
+            total_heat_map[k] += v
+
+    import seaborn as sns; sns.set_theme()
+    import matplotlib.pyplot as plt
+    data = total_heat_map[piece]
+
+    ax = sns.heatmap(data)
+    plt.show(block=False)
+
+static_chess_heatmap(df2['all_game_moves'], 'white_queen')
+
+
+def animated_chess_heatmap(dataframe_pgns, piece, window=5, first_move_cutoff=0, number_of_moves=100):
+    for i in range(first_move_cutoff, number_of_moves):
+        static_chess_heatmap(dataframe_pgns, piece, i, i+window)
+
+animated_chess_heatmap(df2['all_game_moves'], 'white_queen')

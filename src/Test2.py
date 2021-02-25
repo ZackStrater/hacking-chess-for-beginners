@@ -69,7 +69,7 @@ regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result "1-0"]\n)(?
 
 
 path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
-path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/white_wins_full_game_lichess_data_jan_2021_cleaned'
+path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/white_wins_full_game_moves_lichess_data_jan_2021_cleaned'
 load_split_data(regex_string_1000_1500_games, path_in_jan_2021, None, path_out_jan_2021_non_eval)
 
 
