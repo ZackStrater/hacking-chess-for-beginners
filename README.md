@@ -22,7 +22,7 @@ first move
 
 
 
-![](gifs/rook_small.gif) ![](gifs/white_queen.gif) ![](gifs/white_pawn.gif)
+![](gifs/white.gif) ![](gifs/white_queen.gif) ![](gifs/white_pawn.gif)
 ![](gifs/white_knight.gif) ![](gifs/white_king.gif) ![](gifs/white_bishop.gif)
 
 named openings
