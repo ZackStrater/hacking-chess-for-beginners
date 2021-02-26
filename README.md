@@ -8,11 +8,17 @@ The data for this project came from the public database from lichess.org, a popu
 
 graph of playerbase -----
 
+
+
 Additionally, selected only games played in the 5 minute time format as it is one of the most popular and is long enough for opening selection to have a large effect on the game.  
 
 Analysis
 three breakdowns
 first move
+
+![White_first_move](images/white_first_move.png)
+![White_first_moves_plot](images/white_first_moves_plot.png)
+
 named openings
 how many to look at?
 first three moves w
