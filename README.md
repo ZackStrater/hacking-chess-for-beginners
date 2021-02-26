@@ -20,7 +20,9 @@ first move
 ![White_first_moves_plot](images/white_first_moves_plot.png)  ![White first moves board](images/white_first_moves_board_med.png)
 
 
-
+| White  | Black |
+| ------------- | ------------- |
+| Pawns  |
 ![](gifs/white_pawn.gif) ![](gifs/black_pawn.gif)
 
 ![](gifs/white_knight.gif) ![](gifs/black_knight.gif) 
@@ -32,18 +34,6 @@ first move
 ![](gifs/white_rook.gif) ![](gifs/black_rook.gif) 
 
 ![](gifs/white_king.gif) ![](gifs/black_king.gif)
-
-
-#               rook                                                 king                                                 Queen
-![](gifs/black_rook.gif)  ![](gifs/black_king.gif) ![](gifs/black_queen.gif)
-#               bishop                                                pawn                                                 Knight
-![](gifs/black_bishop.gif) ![](gifs/black_pawn.gif) ![](gifs/black_knight.gif) 
-
-
-
-![](gifs/white_bishop.gif) ![](gifs/white_pawn.gif) ![](gifs/white_knight.gif) 
-
-![](gifs/white_rook.gif)  ![](gifs/white_king.gif) ![](gifs/white_queen.gif)
 
 
 
