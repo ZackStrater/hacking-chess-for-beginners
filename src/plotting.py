@@ -217,3 +217,45 @@ ax.annotate(gp2['1b'][2], (x[2], y[2]), textcoords="offset points", xytext=(0, 1
 ax.annotate(gp2['1b'][11], (x[11], y[11]), textcoords="offset points", xytext=(5, -10))
 ax.annotate(gp2['1b'][19], (x[19], y[19]), textcoords="offset points", xytext=(-20, 0))
 plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+columns = ['white_name', 'black_name', "white_elo", 'black_elo', 'time_control']
+df = pd.read_csv('/media/zackstrater/New Volume/chess_data/player_elos_300+0_games',
+                 names=columns)
+df
+
+
+
+df2 = df.groupby('white_name').mean().reset_index()
+df3 = df2[df2['white_elo'] == 1500]
+df2 = df2[df2['white_elo'] != 1500]
+df4 = pd.concat([df2, df3[0:300]])
+df2.shape
+
+
+
+import seaborn as sns
+ax = sns.kdeplot(df4['white_elo'],color='blue', linewidth=0)
+plt.axvline(x=1000,color='black', linewidth=1)
+plt.axvline(x=1500,color='black', linewidth=1)
+x, y = ax.lines[0].get_data()
+ax.fill_between(x, y,where=(x > 1000) & (x < 1500), color="orange", alpha=0.5)
+ax.fill_between(x, y,where=(x < 1000) | (x > 1500), color="blue", alpha=0.5)
+ax.set_xlim(500, 3000)
+
+plt.show()
+
+
+df3 = df2[(df2['white_elo'] > 999) & (df2['white_elo'] < 1501)]
+df3.shape
+df3.shape[0]/df2.shape[0]

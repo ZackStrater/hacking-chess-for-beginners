@@ -117,12 +117,13 @@ import pandas as pd
 
 columns = ['game_id', 'result', "white_elo", 'black_elo', 'white_rating_diff',
            'black_rating_diff', 'eco', 'opening', 'time_control', 'all_game_moves']
-df = pd.read_csv('/media/zackstrater/New Volume/chess_data/white_wins_full_game_lichess_data_jan_2021_cleaned',
+df = pd.read_csv('/media/zackstrater/New Volume/chess_data/white_wins_full_game_moves_lichess_data_jan_2021_cleaned',
                  names=columns)
 
-df2 = df[df['opening'] == 'Ruy Lopez']
+df2 = df[df['opening'] == 'Vienna Game: Vienna Gambit']
 
-def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_cutoff=None):
+
+def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_cutoff=None, show=False, save=False, path='chess_image.png'):
     total_heat_map = {
             'white_rook': np.zeros((8,8)),
             'white_knight': np.zeros((8, 8)),
@@ -146,18 +147,26 @@ def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_c
         for k,v in game_heat_map_dict.items():
             total_heat_map[k] += v
 
-    import seaborn as sns; sns.set_theme()
+    import seaborn as sns
+    sns.set_theme()
     import matplotlib.pyplot as plt
     data = total_heat_map[piece]
+    plt.figure()
+    ax = sns.heatmap(data, cbar=False, xticklabels=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], yticklabels=[8, 7, 6, 5, 4, 3, 2, 1])
+    ax.set_title(f'moves {first_move_cutoff + 1}-{last_move_cutoff}') # this is actually half moves?
+    if save:
+        fig = ax.get_figure()
+        fig.savefig(path, dpi=300)
+    if show:
+        plt.show()
 
-    ax = sns.heatmap(data)
-    plt.show(block=False)
-
-static_chess_heatmap(df2['all_game_moves'], 'white_queen')
+# static_chess_heatmap(df2['all_game_moves'], 'white_queen', save=True, path='../images/white_pawnmove_0_through_move_5.png')
+# static_chess_heatmap(df2['all_game_moves'], 'black_queen', save=True, path='../images/black_pawnmove_0_through_move_5.png')
 
 
-def animated_chess_heatmap(dataframe_pgns, piece, window=5, first_move_cutoff=0, number_of_moves=100):
-    for i in range(first_move_cutoff, number_of_moves):
-        static_chess_heatmap(dataframe_pgns, piece, i, i+window)
+def animated_chess_heatmap(dataframe_pgns, piece, window=5, stepsize=5, first_move_cutoff=0, number_of_moves=100, save=True, image_path=''):
+    for i in range(first_move_cutoff, number_of_moves, stepsize):
+        static_chess_heatmap(dataframe_pgns, piece, i, i + window, show=False, save=save, path=image_path + piece + f'move_{i+1}_through_move_{i + window}.png')
 
-animated_chess_heatmap(df2['all_game_moves'], 'white_queen')
+
+animated_chess_heatmap(df2['all_game_moves'], 'white_rook', image_path='/home/zackstrater/Desktop/chess_images_for_gifs/')
