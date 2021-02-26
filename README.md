@@ -16,7 +16,7 @@ Analysis
 three breakdowns
 first move
 
-![White_first_move](images/white_first_move.png = 250x250)
+![White_first_move](images/white_first_move.png =250x250)
 ![White_first_moves_plot](images/white_first_moves_plot.png)
 
 named openings
