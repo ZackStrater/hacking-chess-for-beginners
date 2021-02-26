@@ -22,8 +22,8 @@ first move
 
 
 
-![White_rook gif](gifs/rook_small.gif) ![White_queen gif](gifs/white_queen.gif) ![White_pawn gif](gifs/white_pawn.gif)
-![White_knight gif](gifs/white_knight.gif) ![White_king gif](gifs/white_king.gif) ![White_bishop gif](gifs/white_bishop.gif)
+![](gifs/rook_small.gif) ![](gifs/white_queen.gif) ![](gifs/white_pawn.gif)
+![](gifs/white_knight.gif) ![](gifs/white_king.gif) ![](gifs/white_bishop.gif)
 
 named openings
 how many to look at?
