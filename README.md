@@ -46,6 +46,7 @@ A gambit (such as the queen's gambit) is an opening where a player sacrifices on
 
 While the Queen's gambit is considered a mainstay of chess openings and is frequently played at the highest levels, the Vienna Gambit and King's Gambit are generally considered technically unsound.  As such, I wanted to see if these particular openings would be less succesfful as higher elo ratings, where players might know how to better defend against the aggression.  To my surprise, these gambit openings actually perform better as you move up from 1000-1500 elo.  
 ![](images/white_gambit_openings_across_elo.png)
+
 I was surprised by this result, but it can be rationalized by the fact that these gambit openings require your to accomplish something with your positional advantage, otherwise you will have lost a pawn for nothing.  It is plausible that the closer to 1500 elo, the more players understand how to succesfully launch an attack on the opposing side.  Still, these openings would be a great choice for beginners to invest in, as they perform well even at 1000 elo and will continue to be effective against players as you gain rating.  I was also to curious to see how these gambit perform at the elite tier of chess players (elo > 2000):
 
 ![](images/white_gambit_openings_2000elo_plus.png)
