@@ -17,7 +17,7 @@ three breakdowns
 first move
 
 
-![White_first_moves_plot](images/white_first_moves_plot.png)        ![White_first_moves_plot](images/white_first_moves_board.png) 
+![White_first_moves_plot](images/white_first_moves_plot.png)        ![White_first_moves_plot](images/white_first_moves_board_600x600.png) 
 
 
 named openings
