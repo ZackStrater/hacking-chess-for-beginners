@@ -19,6 +19,7 @@ Additionally, selected only games played in the 5 minute time format as it is on
 ## Named Openings
 Traditionally, chess openings are categorized by their name.  These are names such as the Queen's Gambit, the Sicilian, the Ruy Lopez, and my personal favorite, the Fried Liver Attack (yes that's a real name of a chess opening).  Every point on the plot below represents a distinct named opening (yes there are a ton of them!), showing how often it is played on the y axis and the win percent from white's perspective on the x axis.  Openings to the right of 0.5 lead to a higher chance of white winning while the left represent openings that favor black.    
 ![](images/named_openings.png)
+
 We can clearly see that Chess systematically advantages white because the player gets to make the first move.  This advantage is estimated to be worth around a half a pawn.  There are a few issues with evaluating chess openings based on their name. Named opening are of variable length, some only consist of 1 move for white while others can be up to eight individual moves in total.  Secondly, several named openings are just variations of another distinct opening with the same name (i.e. the Queen's Gambit vs. the Queen's Gambit Declined).  These factors make the name a difficult parameter to analyze the dataset by.  Let's try something simpler instead.
 
 ## First Moves
@@ -35,7 +36,9 @@ Unfortunately, the outlook is pretty bleak for black; only one move barely has a
 ## First Three Moves for White
 If the first move for each side signifies how players want to approach an empty starting board, the first three moves lays out the strategy that each player wants to enter the mid-game with.  From White's perspective, we can see that there a several options that lead to suprisingly high winrates for white.  Closer inspection of some the top performers reveals them to be impractical openings, i.e. one's that require black to play strategically poor moves.  These openings are not useful because they are relatively rare and not easily accessible from white's perspective.  However, several of the best opening three moves for white are movesets that could be practically played.  Interestingly, they all had one thing in common: they were all gambit openings.  
 
-![](images/first_three_moves_white.png)
+![](images/first_three_moves_white.png)  ![](images/Vienna_Gambit.png)
+
+![](images/Queens_Gambit.png) ![](images/Kings_Gambit.png)
 
 A gambit (such as the queen's gambit) is an opening where a player sacrifices one or more pieces (usually pawns) in order to get a positional advantage, e.g. by allowing white to develop their major pieces onto the board.  There were three main types of gambits (and their variants) that appeared in the top ten openings for white: 1) the Vienna Gambit, the King's Gambit, and the Queen's Gambit.  The Vienna Gambit and the King's Gambit are considered very aggresive, seeking to sacrifice their f pawn, which is usually considered a crucial defender of the white king. The Queen's gambit is considered a more positional opening, attempting to sacrifice white's c pawn in order to lure one of black's central pawn away from the center.    
 
