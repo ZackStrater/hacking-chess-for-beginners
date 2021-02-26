@@ -48,24 +48,24 @@ I was surprised by this result, but it can be rationalized by the fact that thes
 Not bad!  These are openings you keep in your back pocket for your whole chess career.  Before we move on, we should talk about things from black's perspectives.  Where there openings that similarly led to higher win chances for black?  Unfortunately, a similar analysis produced some openings that had above 50% winrate for black, but once again, these were openings where white played erroneously.  Part of the imbalance of chess is that white generally directs the flow of the opening, leaving people playing with the black pieces to create positional advantages in the midgame in order to win games.  More work is necessary to find out what strategies are optimal for the black pieces.  
 
 ## What makes these openings so successful?
-Lastly I wanted to get an understanding of why these risky openings were leading to such large advantages for white.  To this end, I plotted a time series heatmap (with the help of seaborn and the chess-python library) for each of the types of pieces for all the Vienna Gambit games that were played and won by white (~4000 games).  
-
+Lastly I wanted to get an understanding of why these risky openings were leading to such large advantages for white.  To this end, I plotted a time series heatmap (with the help of seaborn and the chess-python library) for each of the types of pieces for all the Vienna Gambit games that were played and won by white (~4000 games).  While these plots can be a bit difficult to parse, there are a few takeaways here.  First, is there is a lot of pawn activity in the center of the board for both sides.  This is generally white's strategy for this opening - leverage the sacrifice of the f6 pawn to bust open the center files.  Then, you can notice that the rook manuevers to the now vacant E and F files, most likely via castilng kingside.  The rooks can target blacks rooks from a far vantage point.  Towards the end of the game, the rooks are lifted to black's side of the board accompanied by white's slowly prorgressing pawn attacks on either flank, ultimately leading to successful checkmate of the black king in the top right corner.  
 | White  | Black |
 | :-------------: | :-------------: |
-|          Pawns     |       Pawns        |
+|          White Pawns     |       Black Pawns        |
 |![](gifs/white_pawn.gif) | ![](gifs/black_pawn.gif) |
-|          Knights     |       Knights        |
+|          White Knights     |       Black Knights        |
 |![](gifs/white_knight.gif) | ![](gifs/black_knight.gif) |
-|          bishops     |       bishops       |
+|          White Bishops     |       Black Bishops       |
 |![](gifs/white_bishop.gif) | ![](gifs/black_bishop.gif) |
-|          queen    |       queen       |
+|          White Queen    |       Black Queen       |
 |![](gifs/white_queen.gif) | ![](gifs/black_queen.gif) |
-|          rooks     |       rooks       |
+|          White Rooks     |       Black Rooks       |
 |![](gifs/white_rook.gif) | ![](gifs/black_rook.gif) |
-|         kings    |      kings       |
+|         White King    |      Black King       |
 |![](gifs/white_king.gif) | ![](gifs/black_king.gif) |
 
 
-
+# Conclusion
+My biggest takeaways for hacking chess for beginners is to learn to play gambit openings for white and when you have the black pieces, well, just try to hang in there.  Ultimately, my takeaway is that to increase your rating, you need to be succesfully winning games as white and just try to stop the bleeding as black.  Future directions of this project will include refinement of the heatmap visualizing to get a sharper view of what is happening at each stage of the game as well as applying it to other openings.  Additionally, more investigation of openings with the black pieces is warranted.  Keep sacfricing those pawn to the elo gods!    
 
 
