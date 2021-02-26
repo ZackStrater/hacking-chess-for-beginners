@@ -1,7 +1,7 @@
 import chess
 import chess.engine
 import numpy as np
-print(np.version.version)
+
 
 chess_dict = {
     'R': 1,
@@ -152,7 +152,7 @@ def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_c
     import matplotlib.pyplot as plt
     data = total_heat_map[piece]
     plt.figure()
-    ax = sns.heatmap(data, cbar=False, xticklabels=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], yticklabels=[8, 7, 6, 5, 4, 3, 2, 1])
+    ax = sns.heatmap(data, cbar=False, xticklabels=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], yticklabels=[8, 7, 6, 5, 4, 3, 2, 1], cmap="YlGnBu")
     ax.set_title(f'moves {first_move_cutoff + 1}-{last_move_cutoff}') # this is actually half moves?
     if save:
         fig = ax.get_figure()
@@ -169,4 +169,5 @@ def animated_chess_heatmap(dataframe_pgns, piece, window=4, stepsize=4, first_mo
         static_chess_heatmap(dataframe_pgns, piece, i, i + window, show=False, save=save, path=image_path + piece + f'move_{i+1}_through_move_{i + window}.png')
 
 
-animated_chess_heatmap(df2['all_game_moves'], 'white_knight', image_path='/home/zackstrater/Desktop/chess_images_for_gifs/')
+animated_chess_heatmap(df2['all_game_moves'], 'black_bishop', image_path='/home/zackstrater/Desktop/chess_images_for_gifs/')
+
