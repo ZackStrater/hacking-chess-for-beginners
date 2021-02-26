@@ -1,5 +1,8 @@
 # hacking-chess-for-beginners
-The player base for online chess has exploded over the last 10 years, due to the rise of free to play chess websites that allow you to play with players from around the world ----
+The player base for online chess has exploded over the last 10 years, due in part to the rise of free to play chess websites that allow you to play with players from around the world.  The world of chess is expanding in some of the most interesting and unexpected ways with new stylistic metagames amongst chess professionals, new chess variants, and the rise of undefeatable chess AI.  If you are new to chess, this project may have some useful insights to help boost you rating!  Read to the end to figure out what this shapeshifting cube is!
+
+-----plot
+
 
 Chess is well known for being one of the most strategically difficult and complex games.  Even the opening few moves of a chess game, which might seem relatively limited at first glance, demonstrates how astronomically diverse the game is.  By the time both players have taken 3 turns each (each pair of turns is referred to as one move), the number of possible board states is around 120 million.  This dense thicket of possibilties can be an incredibly daunting for new players and as such beginners (like myself!) tend to stick to just one or two openings.  Yet, learning specific chess openings can be incredibly important to improving and is one of the first things that beginners are instructed to learn after learning the basics.  However, advice on what openings to learn is often coming from the perspective of teachers and more experienced players.  I wanted to know what are the openings for beginner level players that statistically lead to the highest win percentage both from black and white side.  Are there openings that would lead to significantly higher winrates for these players?
 
@@ -38,12 +41,14 @@ A gambit (such as the queen's gambit) is an opening where a player sacrifices on
 
 While the Queen's gambit is considered a mainstay of chess openings and is frequently played at the highest levels, the Vienna Gambit and King's Gambit are generally considered technically unsound.  As such, I wanted to see if these particular openings would be less succesfful as higher elo ratings, where players might know how to better defend against the aggression.  To my surprise, these gambit openings actually perform better as you move up from 1000-1500 elo.  
 ![](images/white_gambit_openings_across_elo.png)
-I was surprised by this result, but it can be rationalized by the fact that these gambit openings require your to accomplish something with your positional advantage, otherwise you will have lost a pawn for nothing.  It is plausible that the closer to 1500 elo, the more players understand how to succesfully launch an attack on the opposing side.  Still, these openings would be a great choice for beginners to invest in, as they perform well even at 1000 elo and will continue to be effective against players as you gain rating.  Out of curiosity, I wonder it these
+I was surprised by this result, but it can be rationalized by the fact that these gambit openings require your to accomplish something with your positional advantage, otherwise you will have lost a pawn for nothing.  It is plausible that the closer to 1500 elo, the more players understand how to succesfully launch an attack on the opposing side.  Still, these openings would be a great choice for beginners to invest in, as they perform well even at 1000 elo and will continue to be effective against players as you gain rating.  I was also to curious to see how these gambit perform at the elite tier of chess players (elo > 2000):
 
 ![](images/white_gambit_openings_2000elo_plus.png)
 
-## What makes these openings so successful?
+Not bad!  These are openings you keep in your back pocket for your whole chess career.  Before we move on, we should talk about things from black's perspectives.  Where there openings that similarly led to higher win chances for black?  Unfortunately, a similar analysis produced some openings that had above 50% winrate for black, but once again, these were openings where white played erroneously.  Part of the imbalance of chess is that white generally directs the flow of the opening, leaving people playing with the black pieces to create positional advantages in the midgame in order to win games.  More work is necessary to find out what strategies are optimal for the black pieces.  
 
+## What makes these openings so successful?
+Lastly I wanted to get an understanding of why these risky openings were leading to such large advantages for white.  To this end, I plotted a time series heatmap (with the help of seaborn and the chess-python library) for each of the types of pieces for all the Vienna Gambit games that were played and won by white (~4000 games).  
 
 | White  | Black |
 | :-------------: | :-------------: |
