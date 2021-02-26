@@ -72,10 +72,29 @@ def load_split_data(regex_string, path_in, path_out_eval_games, path_out_non_eva
 # path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/white_wins_full_game_moves_lichess_data_jan_2021_cleaned'
 # load_split_data(regex_string_1000_1500_games, path_in_jan_2021, None, path_out_jan_2021_non_eval)
 
-regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result "\d-\d"]\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+# regex_string_1000_1500_games = '(\[Site.+?\n)(?:.+?\n){0,4}(\[Result "\d-\d"]\n)(?:.+?\n){0,2}(\[WhiteElo "1[0-4]\d\d"]\n)(\[BlackElo "1[0-4]\d\d"]\n)\[WhiteRatingDiff "([+-]\d\d?)"]\n\[BlackRatingDiff "([+-]\d\d?)"]\n(\[ECO.+?\n)(\[Opening.+?\n)(\[TimeControl "300\+0"]\n)(?:\[Termination.+?\n)(\n1\..+? 11\. .+?\d-\d\n)'
+#
+#
+# path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
+# path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/castled_lichess_data_jan_2021_cleaned'
+# load_split_data(regex_string_1000_1500_games, path_in_jan_2021, None, path_out_jan_2021_non_eval)
 
 
-path_in_jan_2021 = '/media/zackstrater/New Volume/lichess_db_standard_rated_2021-01.pgn'
-path_out_jan_2021_non_eval = '/media/zackstrater/New Volume/chess_data/castled_lichess_data_jan_2021_cleaned'
-load_split_data(regex_string_1000_1500_games, path_in_jan_2021, None, path_out_jan_2021_non_eval)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
