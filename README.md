@@ -21,7 +21,7 @@ first move
 
 
 
-![White_first_moves_board]('white_first_moves_board_med.png') 
+![White_first_moves_board]('white_first_moves_board.png') 
 
 
 named openings
