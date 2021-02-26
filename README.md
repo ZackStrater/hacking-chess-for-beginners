@@ -34,9 +34,9 @@ first move
 ![](gifs/white_king.gif) ![](gifs/black_king.gif)
 
 
-# rook                                                # king                                                # Queen
+#               rook                                                 king                                                 Queen
 ![](gifs/black_rook.gif)  ![](gifs/black_king.gif) ![](gifs/black_queen.gif)
-# bishop                                               # pawn                                                # Knight
+#               bishop                                                pawn                                                 Knight
 ![](gifs/black_bishop.gif) ![](gifs/black_pawn.gif) ![](gifs/black_knight.gif) 
 
 
