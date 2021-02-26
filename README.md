@@ -35,10 +35,12 @@ Unfortunately, the outlook is pretty bleak for black; only one move barely has a
 
 ## First Three Moves for White
 If the first move for each side signifies how players want to approach an empty starting board, the first three moves lays out the strategy that each player wants to enter the mid-game with.  From White's perspective, we can see that there a several options that lead to suprisingly high winrates for white.  Closer inspection of some the top performers reveals them to be impractical openings, i.e. one's that require black to play strategically poor moves.  These openings are not useful because they are relatively rare and not easily accessible from white's perspective.  However, several of the best opening three moves for white are movesets that could be practically played.  Interestingly, they all had one thing in common: they were all gambit openings.  
-
-![](images/first_three_moves_white.png)  ![](images/Vienna_Gambit.png)
-
-![](images/Queens_Gambit.png) ![](images/Kings_Gambit.png)
+|                 |               |
+| :-------------: | :-------------: |
+|                 |        Vienna Gambit         |
+|![](images/first_three_moves_white.png) | ![](images/Vienna_Gambit.png) |
+|         Queen's Gambit        |        King's Gambit         |
+|![](images/Queens_Gambit.png) | ![](images/Kings_Gambit.png) |
 
 A gambit (such as the queen's gambit) is an opening where a player sacrifices one or more pieces (usually pawns) in order to get a positional advantage, e.g. by allowing white to develop their major pieces onto the board.  There were three main types of gambits (and their variants) that appeared in the top ten openings for white: 1) the Vienna Gambit, the King's Gambit, and the Queen's Gambit.  The Vienna Gambit and the King's Gambit are considered very aggresive, seeking to sacrifice their f pawn, which is usually considered a crucial defender of the white king. The Queen's gambit is considered a more positional opening, attempting to sacrifice white's c pawn in order to lure one of black's central pawn away from the center.    
 
