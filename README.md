@@ -23,6 +23,8 @@ first move
 
 ![White_queen gif](gifs/white_queen_small.gif)
 ![White_rook gif](gifs/white_rook.gif)
+![White_rook gif](gifs/white_rook_small.gif) ![White_rook gif](gifs/white_rook_small.gif) ![White_rook gif](gifs/white_rook_small.gif)
+
 
 named openings
 how many to look at?
