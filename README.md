@@ -21,7 +21,7 @@ first move
 
 
 
-![White_queen gif](gifs/white_queen.gif)
+![White_queen gif](gifs/white_queen_small.gif)
 ![White_rook gif](gifs/white_rook.gif)
 
 named openings
