@@ -21,9 +21,14 @@ first move
 
 
 
+![](gifs/white_pawn.gif) ![](gifs/black_pawn.gif)
+![](gifs/white_knight.gif) ![](gifs/black_knight.gif) 
+![](gifs/white_bishop.gif) ![](gifs/black_bishop.gif)
+![](gifs/white_queen.gif) ![](gifs/white_queen.gif) 
+![](gifs/white_rook.gif) ![](gifs/black_rook.gif) 
+![](gifs/white_king.gif) ![](gifs/black_king.gif)
 
-![](gifs/white_rook.gif) ![](gifs/white_queen.gif) ![](gifs/white_pawn.gif)
-![](gifs/white_knight.gif) ![](gifs/white_king.gif) ![](gifs/white_bishop.gif)
+
 
 named openings
 how many to look at?
