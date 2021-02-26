@@ -1,7 +1,8 @@
 # Hacking Chess for Beginners
 The player base for online chess has exploded over the last 10 years, due in part to the rise of free to play chess websites that allow you to play with players from around the world.  The world of chess is expanding in some of the most interesting and unexpected ways with new stylistic metagames amongst chess professionals, new chess variants, and the rise of undefeatable chess AI.  If you are new to chess, this project may have some useful insights to help boost you rating!  Read to the end to figure out what these shapeshifting cubes are!
-
-![](gifs/white_pawn.gif) ![](gifs/black_queen.gif) ![](gifs/white_bishop.gif)
+|                 |               |                   |
+| :-------------: | :-------------: |  :-------------: |
+|![](gifs/white_pawn.gif) | ![](gifs/black_queen.gif) | ![](gifs/white_bishop.gif)|
 
 
 Chess is well known for being one of the most strategically difficult and complex games.  Even the opening few moves of a chess game, which might seem relatively limited at first glance, demonstrates how astronomically diverse the game is.  By the time both players have taken 3 turns each (each pair of turns is referred to as one move), the number of possible board states is around 120 million.  This dense thicket of possibilties can be an incredibly daunting for new players and as such beginners (like myself!) tend to stick to just one or two openings.  Yet, learning specific chess openings can be incredibly important to improving and is one of the first things that beginners are instructed to learn after learning the basics.  However, advice on what openings to learn is often coming from the perspective of teachers and more experienced players.  I wanted to know what are the openings for beginner level players that statistically lead to the highest win percentage both from black and white side.  Are there openings that would lead to significantly higher winrates for these players?
@@ -24,12 +25,17 @@ We can clearly see that Chess systematically advantages white because the player
 
 ## First Moves
 First we can analyze the opening moves for white, again plotting them by win percentage and frequency played.  
-![White_first_moves_plot](images/white_first_moves_plot.png)  ![White first moves board](images/white_first_moves_board_med.png)
+
+|                 |               |             
+| :-------------: | :-------------: | 
+|![White_first_moves_plot](images/white_first_moves_plot.png) | ![White first moves board](images/white_first_moves_board_med.png)|
 
 The move pawn to e4 is by far the most popular move to begin the game with for white.  It serves two purposes, to grab hold of the center of the board (which is seen as advantageous) and it allows both the queen and the light-square bishop to enter the game if needed.  However, the moves pawn to b4, c4, and d4 all have a marginally higher win percentages for white.  Notably, all these opening moves are accomplishing the same thing, to leap into the center of the board and try to limit what squares black can manuever their pieces to.  If you are beginner who always starts with e4, these other centralizing pawn moves may be worth investigating.   
 
-Black's first move shows a bit more diversity, which may reflect the fact that it can be influenced by what move white played.  
-![](images/black_first_moves_plot.png) ![](images/black_first_moves_board_400x400.png) 
+Black's first move shows a bit more diversity, which may reflect the fact that it can be influenced by what move white played. 
+|                 |               |             
+| :-------------: | :-------------: | 
+|![](images/black_first_moves_plot.png) | ![](images/black_first_moves_board_400x400.png) |
 
 Unfortunately, the outlook is pretty bleak for black; only one move barely has a positive winrate and there aren't many great alternatives.  Unlike white's opening move, black's most common and advantageous first moves refelct a diversity of approaches.  Pawn to g6 is a relatively timid move, looking to hide the king beneath a pawn hut by castling quickly.  Pawn to e5 and c5 are moves that are trying to fight white for control of the center of the board.  Pawn to d5 is an odd move, inviting white to immediately take your pawn.  While chess engines do not approve of this approach, this opening has been played by the top rate players.  Part of it's popularity here comes from a trick of online chess.  Chess sites have a feature that allows you to premove your next move so that it will happen as soon as the other player takes their turn. Many players simply auto pilot pawn to e4 followed by premoving knight to f3, which now allows black to take their pawn and threaten the knight on f3!  However, these sorts of tactics become less and less effective as you move up through ratings. 
 
