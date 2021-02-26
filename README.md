@@ -22,17 +22,17 @@ first move
 
 | White  | Black |
 | ------------- | ------------- |
-| Pawns  |     |
+|          Pawns     |       Pawns        |
 |![](gifs/white_pawn.gif) | ![](gifs/black_pawn.gif) |
-
+|          Pawns     |       Pawns        |
 |![](gifs/white_knight.gif) | ![](gifs/black_knight.gif) |
-
+|          Pawns     |       Pawns        |
 |![](gifs/white_bishop.gif) | ![](gifs/black_bishop.gif) |
-
+|          Pawns     |       Pawns        |
 |![](gifs/white_queen.gif) | ![](gifs/black_queen.gif) |
-
+|          Pawns     |       Pawns        |
 |![](gifs/white_rook.gif) | ![](gifs/black_rook.gif) |
-
+|          Pawns     |       Pawns        |
 |![](gifs/white_king.gif) | ![](gifs/black_king.gif) |
 
 
