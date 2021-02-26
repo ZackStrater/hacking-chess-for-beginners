@@ -164,9 +164,9 @@ def static_chess_heatmap(dataframe_pgns, piece, first_move_cutoff=0, last_move_c
 # static_chess_heatmap(df2['all_game_moves'], 'black_queen', save=True, path='../images/black_pawnmove_0_through_move_5.png')
 
 
-def animated_chess_heatmap(dataframe_pgns, piece, window=5, stepsize=5, first_move_cutoff=0, number_of_moves=100, save=True, image_path=''):
+def animated_chess_heatmap(dataframe_pgns, piece, window=4, stepsize=4, first_move_cutoff=0, number_of_moves=100, save=True, image_path=''):
     for i in range(first_move_cutoff, number_of_moves, stepsize):
         static_chess_heatmap(dataframe_pgns, piece, i, i + window, show=False, save=save, path=image_path + piece + f'move_{i+1}_through_move_{i + window}.png')
 
 
-animated_chess_heatmap(df2['all_game_moves'], 'white_rook', image_path='/home/zackstrater/Desktop/chess_images_for_gifs/')
+animated_chess_heatmap(df2['all_game_moves'], 'white_pawn', image_path='/home/zackstrater/Desktop/chess_images_for_gifs/')
