@@ -20,6 +20,10 @@ first move
 ![White_first_moves_plot](images/white_first_moves_plot.png)  ![White first moves board](images/white_first_moves_board_med.png)
 
 
+
+![White_queen gif](gifs/white_queen.gif)
+![White_rook gif](gifs/white_rook.gif)
+
 named openings
 how many to look at?
 first three moves w
