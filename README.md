@@ -1,5 +1,5 @@
 # Hacking Chess for Beginners
-The player base for online chess has exploded over the last 10 years, due in part to the rise of free to play chess websites that allow you to play with players from around the world.  The world of chess is expanding in some of the most interesting and unexpected ways with new stylistic metagames amongst chess professionals, new chess variants, and the rise of undefeatable chess AI.  If you are new to chess, this project may have some useful insights to help boost you rating!  Read to the end to figure out what these shapeshifting cubes are!
+The player base for online chess has exploded over the last 10 years, due in part to the rise of free to play chess websites that allow you to play with players from around the world.  The world of chess is expanding in some of the most interesting and unexpected ways with new stylistic metagames amongst chess professionals, new chess variants, and the rise of undefeatable chess AI.  If you are new to chess, this project may have some useful insights to help boost you rating!  Read to the end to figure out what these shapeshifting squares are!
 |                 |               |                   |
 | :-------------: | :-------------: |  :-------------: |
 |![](gifs/white_pawn.gif) | ![](gifs/black_queen.gif) | ![](gifs/white_bishop.gif)|
